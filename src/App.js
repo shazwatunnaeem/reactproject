@@ -1,23 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { NavBar } from './components/NavBar/NavBar';
+import { ContactForm } from './components/ContactForm/ContactForm';
+import { ContactCard } from './components/ContactCard/ContactCard'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar />
+      <Row>
+        <Col> <ContactForm /> </Col>
+        <Col className="m-5"> 
+          <Form.Group className="my-3 mx-5">
+            <Form.Control type="text" placeholder="Filter Contacts..." />
+          </Form.Group>
+          <ContactCard /> 
+          <ContactCard />
+        </Col>
+      </Row>
+      
     </div>
   );
 }
