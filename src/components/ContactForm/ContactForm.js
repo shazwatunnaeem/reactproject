@@ -8,12 +8,16 @@ export function ContactForm(props) {
 
   const { onFormSubmit } = props;
 
-  const [name, setName] = useState("");
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("Male");
-
+  const [name, setName] = useState("");
   const handleNameChange = (event) => {
+    const fullName = event.target.value.split(" ");
+    setfirstName(fullName[0]);
+    setlastName(fullName[1]);
     setName(event.target.value);
   };
   const handleEmailChange = (event) => {
@@ -28,13 +32,16 @@ export function ContactForm(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(name, email, phone, gender);
+    // console.log(name, email, phone, gender);
     onFormSubmit({
-      email, name, phone, gender
+      firstName, lastName, email, phone, gender
     })
+    setfirstName("");
     setName("");
+    setlastName("");
     setEmail("");
     setPhone("");
+    setGender("Male");
   };
 
   return (
@@ -51,7 +58,7 @@ export function ContactForm(props) {
       </Form.Group>
       <FormGroup className="my-3 mx-5" style={{textAlign: "left"}}>
         <h5> Gender:</h5>
-          <Form.Label class= "m-3" check="true">
+          <Form.Label className= "m-3" check="true">
             <Input
               name="male"
               type="radio" 
