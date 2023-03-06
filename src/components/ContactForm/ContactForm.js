@@ -14,6 +14,7 @@ export function ContactForm(props) {
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("Male");
   const [name, setName] = useState("");
+  
   const handleNameChange = (event) => {
     const fullName = event.target.value.split(" ");
     setfirstName(fullName[0]);
