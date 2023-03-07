@@ -1,61 +1,95 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Input } from 'reactstrap';
-import { useState } from "react";
+import { useReducer, useState } from "react";
+import { useSelector,  useDispatch } from "react-redux";
 import { FormGroup } from 'reactstrap';
+import contactFormReducer from './contactform.reducer';
 
 export function ContactForm(props) {
 
-  const { onFormSubmit } = props;
+  //const { onFormSubmit } = props;
 
-  const [firstName, setfirstName] = useState("");
-  const [lastName, setlastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [gender, setGender] = useState("Male");
-  const [name, setName] = useState("");
+  // const [firstName, setfirstName] = useState("");
+  // const [lastName, setlastName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [phone, setPhone] = useState("");
+  // const [gender, setGender] = useState("Male");
+  // const [name, setName] = useState("");
   
-  const handleNameChange = (event) => {
-    const fullName = event.target.value.split(" ");
-    setfirstName(fullName[0]);
-    setlastName(fullName[1]);
-    setName(event.target.value);
+  // const handleNameChange = (event) => {
+  //   const fullName = event.target.value.split(" ");
+  //   setfirstName(fullName[0]);
+  //   setlastName(fullName[1]);
+  //   setName(event.target.value);
+  // };
+  // const handleEmailChange = (event) => {
+  //   setEmail(event.target.value);
+  // };
+  // const handlePhoneChange = (event) => {
+  //   setPhone(event.target.value);
+  // };
+
+  // const initalState = {
+  //   fullname : '',
+  //   email : '',
+  //   phone : '',
+  //   gender : 'Male',
+  //  };
+
+   const { fullname, firstname, lastName, email, phone, gender, form} = useSelector((state) => ({
+    fullname: state.contactFormReducer.fullname,
+    // firstname: state.contactFormReducer.firstname,
+    // lastName: state.contactFormReducer.lastName,
+    email: state.contactFormReducer.email,
+    phone: state.contactFormReducer.phone,
+    gender: state.contactFormReducer.gender,
+    // form: state.contactFormReducer.form
+  }));
+
+  const dispatch = useDispatch();
+  //const [formState, dispatch] = useReducer(contactFormReducer, initalState);
+  const handleTextChange = (e) => {
+     dispatch({
+      type: "FORM TEXT DATA",
+      field: e.target.name,
+      payload: e.target.value,
+     })
   };
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+
+  const onOptionChange = (e) => {
+    dispatch({
+      type: "FORM RADIO BUTTON", 
+      payload: e.target.value,
+     })
   };
-  const handlePhoneChange = (event) => {
-    setPhone(event.target.value);
-  };
-  const onOptionChange = (event) => {
-    setGender(event.target.value);
-  };
+  
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    // console.log(name, email, phone, gender);
-    onFormSubmit({
-      firstName, lastName, email, phone, gender
-    })
-    setfirstName("");
-    setName("");
-    setlastName("");
-    setEmail("");
-    setPhone("");
-    setGender("Male");
+      event.preventDefault()
+      //console.log(formState);
+      const cname = fullname.split(' ');
+      dispatch({
+        type: "Submit", 
+        payload: {firstName: cname[0],
+        lastName: cname[1],
+        email : email,
+        phone : phone,
+        gender : gender},
+       })
   };
 
   return (
     <Form onSubmit={handleSubmit} className="m-5" width="50">
       <h3 style={{ color: "#084298" }} className="list-inline-item align-middle"> Cloud Contact </h3>
       <Form.Group className="my-3 mx-5" controlId="name">
-        <Input type="text" placeholder="Name" name="name" value={name} onChange={handleNameChange} />
+        <Input type="text" placeholder="Name" name="fullname" value={fullname} onChange={handleTextChange} />
       </Form.Group>
       <Form.Group className="my-3 mx-5" controlId="email">
-        <Input type="email" name="email" placeholder="Email" value={email} onChange={handleEmailChange} />
+        <Input type="email" name="email" placeholder="Email" value={email} onChange={handleTextChange} />
       </Form.Group>
       <Form.Group className="my-3 mx-5" controlId="phone" >
-        <Input type="phone" name="phonenumber" placeholder="Phone" value={phone} onChange={handlePhoneChange} />
+        <Input type="phone" name="phone" placeholder="Phone" value={phone} onChange={handleTextChange} />
       </Form.Group>
       <FormGroup className="my-3 mx-5" style={{textAlign: "left"}}>
         <h5> Gender:</h5>

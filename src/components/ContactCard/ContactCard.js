@@ -13,12 +13,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 export function ContactCard(props) {
 
-    console.log(props);
+    // console.log(props);
     const { form } = props;
     const dispatch = useDispatch();
 
 
     const deleteContact = (event) => {
+        event.preventDefault()
         console.log("delete");
         console.log(event.target.id);
         dispatch({ type: "delete", payload: event.target.id})

@@ -7,7 +7,7 @@ import { ContactCard } from './components/ContactCard/ContactCard';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector,  useDispatch } from "react-redux";
 
 
@@ -17,9 +17,9 @@ function App() {
   // const [user, setUser] = useState([]);
 
   const { deleteId, form, user } = useSelector((state) => ({
-    deleteId: state.reducer.deleteId,
-    form: state.reducer.form,
-    user: state.reducer.user
+    deleteId: state.appReducer.deleteId,
+    form: state.contactFormReducer.form,
+    user: state.appReducer.user
   }));
   const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ function App() {
         .then((data) => {
           
           console.log(data["users"]);
-          dispatch({ type: "api-call", users: data["users"]})
+          dispatch({ type: "api-call", payload: data["users"]})
           // setUser(data["users"]);
           //console.log(user);
         })
@@ -41,13 +41,27 @@ function App() {
 
   useEffect(() => {
     if (form != null) {
-      dispatch({ type: "add-contact", users: [form, ...user]})
+      dispatch({ type: "add-contact", payload: [form, ...user]})
       // setUser([form, ...user]);
-      console.log("delete id");
-      console.log(deleteId);
+      console.log([form, ...user]);
     }
     
   }, [form]);
+
+  useEffect(() => {
+    // if (form != null) {
+    //   dispatch({ type: "add-contact", payload: [form, ...user]})
+    //   // setUser([form, ...user]);
+    //   console.log("delete id");
+    //   console.log([form, ...user]);
+    // }
+    if(deleteId !=null){
+      dispatch({ type: "delete", payload: deleteId});
+      console.log("deleted");
+      console.log(deleteId);
+
+    }    
+  }, [deleteId]);
 
   return (
    

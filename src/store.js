@@ -1,22 +1,9 @@
 import { createStore, combineReducers } from "redux";
+import { appReducer } from "./app.reducer";
+import contactFormReducer from "./components/ContactForm/contactform.reducer";
 
 
-const initalState = {
-   deleteId: null,
-   form: null,
-   user: []
-  };
 
 
-function reducer(state = initalState, action) {
-    switch (action.type) {
-        case "delete":
-            return { ...state, deleteId: action.payload };
-        case "api-call":
-            return { ...state, user: action.payload.users };
-        default:
-            return state;
-    }
-  }
-
-  export const store = createStore(combineReducers ({reducer}));
+  export const store = createStore(combineReducers ({appReducer, contactFormReducer}));
+  console.log(store.getState());
