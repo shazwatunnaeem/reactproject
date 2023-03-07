@@ -8,47 +8,15 @@ import contactFormReducer from './contactform.reducer';
 
 export function ContactForm(props) {
 
-  //const { onFormSubmit } = props;
-
-  // const [firstName, setfirstName] = useState("");
-  // const [lastName, setlastName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [phone, setPhone] = useState("");
-  // const [gender, setGender] = useState("Male");
-  // const [name, setName] = useState("");
-  
-  // const handleNameChange = (event) => {
-  //   const fullName = event.target.value.split(" ");
-  //   setfirstName(fullName[0]);
-  //   setlastName(fullName[1]);
-  //   setName(event.target.value);
-  // };
-  // const handleEmailChange = (event) => {
-  //   setEmail(event.target.value);
-  // };
-  // const handlePhoneChange = (event) => {
-  //   setPhone(event.target.value);
-  // };
-
-  // const initalState = {
-  //   fullname : '',
-  //   email : '',
-  //   phone : '',
-  //   gender : 'Male',
-  //  };
-
-   const { fullname, firstname, lastName, email, phone, gender, form} = useSelector((state) => ({
+   const { fullname, email, phone, gender, cid} = useSelector((state) => ({
     fullname: state.contactFormReducer.fullname,
-    // firstname: state.contactFormReducer.firstname,
-    // lastName: state.contactFormReducer.lastName,
     email: state.contactFormReducer.email,
     phone: state.contactFormReducer.phone,
     gender: state.contactFormReducer.gender,
-    // form: state.contactFormReducer.form
+    cid: state.contactFormReducer.cid
   }));
 
   const dispatch = useDispatch();
-  //const [formState, dispatch] = useReducer(contactFormReducer, initalState);
   const handleTextChange = (e) => {
      dispatch({
       type: "FORM TEXT DATA",
@@ -63,15 +31,15 @@ export function ContactForm(props) {
       payload: e.target.value,
      })
   };
-  
 
   const handleSubmit = (event) => {
       event.preventDefault()
-      //console.log(formState);
       const cname = fullname.split(' ');
+      dispatch({type: "SET_ID"})
       dispatch({
         type: "Submit", 
-        payload: {firstName: cname[0],
+        payload: {id: cid,
+        firstName: cname[0],
         lastName: cname[1],
         email : email,
         phone : phone,
@@ -110,15 +78,11 @@ export function ContactForm(props) {
               value="Female"
               onChange={onOptionChange}
               checked={gender === "Female"}
-
             />
             Female
           </Form.Label>
       </FormGroup>
-        
-
-
-      <Button type="submit" style={{ backgroundColor: "#084298" }} size="lg" block="true">
+     <Button type="submit" style={{ backgroundColor: "#084298" }} size="lg" block="true">
         Add Contact
       </Button>
     </Form>

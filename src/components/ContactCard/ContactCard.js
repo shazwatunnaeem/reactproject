@@ -8,7 +8,7 @@ import phone from './phone.png';
 import email from './email.png';
 import './ContactCard.css';
 import person1 from './person1.png';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 
 export function ContactCard(props) {
@@ -17,12 +17,16 @@ export function ContactCard(props) {
     const { form } = props;
     const dispatch = useDispatch();
 
-
     const deleteContact = (event) => {
-        event.preventDefault()
         console.log("delete");
-        console.log(event.target.id);
-        dispatch({ type: "delete", payload: event.target.id})
+        console.log(form.id);
+        dispatch({ type: "delete", payload: form.id})
+    };
+
+    const editContact = (event) => {
+        console.log("edit");
+        console.log(form.id);
+        //dispatch({ type: "delete", payload: form.id})
     };
    
     return (
@@ -40,8 +44,8 @@ export function ContactCard(props) {
                                 <CardImg className="crdimg" src={phone} alt="" />
                                  {form.phone}
                             </CardText>
-                            <Button style={{ backgroundColor: "black" }} className="mx-2"> Edit </Button>
-                            <Button style={{ backgroundColor: "red" }} id= {props.id} onClick= {deleteContact}> Delete </Button>
+                            <Button style={{ backgroundColor: "black" }} id= {form.id} onClick= {editContact} className="mx-2"> Edit </Button>
+                            <Button style={{ backgroundColor: "red" }} id= {form.id} onClick= {deleteContact}> Delete </Button>
                         </Col>
                         <Col style={{textAlign: "right"}}>
                             <Button style={{ backgroundColor: "black" }} className="mb-3" disabled> {form.gender} </Button> <br></br>
