@@ -37,7 +37,7 @@ export function Login() {
               placeholder="********"
             />
           </FormGroup>
-        <Button style={{ backgroundColor: "#084298" }} onClick= {navigateToForm}>Submit</Button>
+        <Button style={{ backgroundColor: "#084298" }} onClick= {navigateToForm}>Login</Button>
         </Form>
     </div>
   );

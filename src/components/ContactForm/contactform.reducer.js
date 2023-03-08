@@ -16,11 +16,10 @@ const initalState = {
         case "FORM TEXT DATA":
             return { ...state, [action.field]: action.payload };
         case "CLEAR":
-            return { initalState };
+            return initalState;
         case "FORM RADIO BUTTON":
             return { ...state, gender: action.payload };
         case "SUBMIT":
-            console.log(state);
             return { ...state, form: action.payload };
         case "EDIT":
             return { ...state, form: action.payload };

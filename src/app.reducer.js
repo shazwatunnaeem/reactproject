@@ -7,7 +7,7 @@ const initalState = {
  
  export function appReducer(state = initalState, action) {
      switch (action.type) {
-         case "API-CALL":
+        case "API-CALL":
             return { ...state, user: action.payload };
         case "DELETE-ID":
             return { ...state, deleteId: action.payload };     

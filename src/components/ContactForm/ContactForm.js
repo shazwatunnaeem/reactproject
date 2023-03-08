@@ -1,12 +1,10 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Input } from 'reactstrap';
-import { useReducer, useState } from "react";
 import { useSelector,  useDispatch } from "react-redux";
 import { FormGroup } from 'reactstrap';
-import contactFormReducer from './contactform.reducer';
 
-export function ContactForm(props) {
+export function ContactForm() {
 
    const { fullname, email, phone, gender, cid} = useSelector((state) => ({
     fullname: state.contactFormReducer.fullname,
