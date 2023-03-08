@@ -31,13 +31,16 @@ export function ContactForm(props) {
       payload: e.target.value,
      })
   };
+  const handleEdit = (e) => {
+
+  }
 
   const handleSubmit = (event) => {
       event.preventDefault()
       const cname = fullname.split(' ');
       dispatch({type: "SET_ID"})
       dispatch({
-        type: "Submit", 
+        type: "SUBMIT", 
         payload: {id: cid,
         firstName: cname[0],
         lastName: cname[1],
@@ -45,10 +48,11 @@ export function ContactForm(props) {
         phone : phone,
         gender : gender},
        })
+      //  dispatch({type: "CLEAR"})
   };
 
   return (
-    <Form onSubmit={handleSubmit} className="m-5" width="50">
+    <Form className="m-5" width="50">
       <h3 style={{ color: "#084298" }} className="list-inline-item align-middle"> Cloud Contact </h3>
       <Form.Group className="my-3 mx-5" controlId="name">
         <Input type="text" placeholder="Name" name="fullname" value={fullname} onChange={handleTextChange} />
@@ -82,8 +86,11 @@ export function ContactForm(props) {
             Female
           </Form.Label>
       </FormGroup>
-     <Button type="submit" style={{ backgroundColor: "#084298" }} size="lg" block="true">
+     <Button onClick={handleSubmit} style={{ backgroundColor: "#084298" }} size="lg" block="true">
         Add Contact
+      </Button>
+      <Button className= "mx-2" onClick={handleEdit} style={{ backgroundColor: "#084298" }} size="lg" block="true" disabled>
+        Edit Contact
       </Button>
     </Form>
   );

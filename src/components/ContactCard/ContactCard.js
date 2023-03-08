@@ -9,6 +9,8 @@ import email from './email.png';
 import './ContactCard.css';
 import person1 from './person1.png';
 import { useDispatch } from "react-redux";
+import {useNavigate} from 'react-router-dom';
+
 
 
 export function ContactCard(props) {
@@ -17,16 +19,21 @@ export function ContactCard(props) {
     const { form } = props;
     const dispatch = useDispatch();
 
+    const navigate = useNavigate();
+    const navigateToDetails = () => {
+        navigate("/contactdetail/" + form.id + "/" + form.firstName+ " " + form.lastName + "/" + form.email + "/" + form.phone + "/" + form.gender);
+      };
+
     const deleteContact = (event) => {
         console.log("delete");
         console.log(form.id);
-        dispatch({ type: "delete", payload: form.id})
+        dispatch({ type: "DELETE-ID", payload: form.id})
     };
 
     const editContact = (event) => {
         console.log("edit");
         console.log(form.id);
-        //dispatch({ type: "delete", payload: form.id})
+        dispatch({ type: "EDIT", payload: form.id})
     };
    
     return (
@@ -34,7 +41,9 @@ export function ContactCard(props) {
             <Card id= {props.id} className="mx-5 my-3">
                 <CardBody className="m-2">
                     <Row>
-                        <Col style={{ textAlign: "left" }}> <CardTitle tag="h4" style={{ color: "#0c5d97" }}> {form.firstName+ " " + form.lastName} </CardTitle>
+                        <Col style={{ textAlign: "left" }}> 
+                        <div onClick= {navigateToDetails}>
+                            <CardTitle tag="h4" style={{ color: "#0c5d97" }}> {form.firstName+ " " + form.lastName} </CardTitle>
                             <CardText>
                             <CardImg className="crdimg"
                                 src={email} alt="" />
@@ -44,10 +53,11 @@ export function ContactCard(props) {
                                 <CardImg className="crdimg" src={phone} alt="" />
                                  {form.phone}
                             </CardText>
-                            <Button style={{ backgroundColor: "black" }} id= {form.id} onClick= {editContact} className="mx-2"> Edit </Button>
-                            <Button style={{ backgroundColor: "red" }} id= {form.id} onClick= {deleteContact}> Delete </Button>
+                        </div>
+                            <Button style={{ backgroundColor: "black" }} id= {form.id} onClick= {editContact} className="mx-2 mt-3"> Edit </Button>
+                            <Button style={{ backgroundColor: "red" }} id= {form.id} onClick= {deleteContact} className="mt-3"> Delete </Button>
                         </Col>
-                        <Col style={{textAlign: "right"}}>
+                        <Col onClick= {navigateToDetails} style={{textAlign: "right"}}>
                             <Button style={{ backgroundColor: "black" }} className="mb-3" disabled> {form.gender} </Button> <br></br>
                             <CardImg className="contactimg" src={person1} alt="" />
                         </Col>

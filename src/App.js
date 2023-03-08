@@ -8,7 +8,13 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { useEffect } from "react";
 import { useSelector,  useDispatch } from "react-redux";
-
+import { Login } from './components/Login';
+import { ContactDetails } from './components/ContactDetails';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 
 function App() {
@@ -27,7 +33,7 @@ function App() {
         .then((data) => {
           
           console.log(data["users"]);
-          dispatch({ type: "api-call", payload: data["users"]})
+          dispatch({ type: "API-CALL", payload: data["users"]})
         })
         .catch((error) => {
           console.log(error)
@@ -38,7 +44,7 @@ function App() {
 
   useEffect(() => {
     if (form != null) {
-      dispatch({ type: "add-contact", payload: [form, ...user]});
+      dispatch({ type: "ADD", payload: [form, ...user]});
       console.log([form, ...user]);
     }
     
@@ -46,7 +52,7 @@ function App() {
 
   useEffect(() => {
     if(deleteId !=null){
-      dispatch({ type: "delete", payload: deleteId});
+      dispatch({ type: "DELETE", payload: deleteId});
       console.log("deleted");
       console.log(deleteId);
 
@@ -56,18 +62,45 @@ function App() {
   return (
    
       <div className="App">
+ 
+
+      <BrowserRouter>
       <NavBar />
-      <Row className="justify-content-md-center">
-        <Col xs lg="4"> <ContactForm /> </Col>
-        <Col xs lg="4" className="m-5">
-          <Form.Group className="my-3 mx-5">
-            <Form.Control type="text" placeholder="Filter Contacts..." />
-          </Form.Group>
-          {user?.map((key, index) => (
-            <ContactCard key={index} id = {index} form={key} />
-          ))}
-        </Col>
-      </Row>
+      <Routes>
+        <Route path="/" element={
+          <div className='m-5 p-5 d-flex justify-content-center'>
+          <Row className="p-5 border d-flex justify-content-center" style= {{width:'700px'}}>
+            <Col xs lg="7">
+              <Login />        
+            </Col>       
+          </Row>
+        </div>
+        } />
+        <Route path="/contactform" element={
+            <Row className="justify-content-md-center">
+              <Col xs lg="4"> <ContactForm /> </Col>
+              <Col xs lg="4" className="m-5">
+                <Form.Group className="my-3 mx-5">
+                  <Form.Control type="text" placeholder="Filter Contacts..." />
+                </Form.Group>
+                {user?.map((key, index) => (
+                  <ContactCard key={index} id = {index} form={key} />
+                ))}
+              </Col>
+            </Row>
+        } />
+        <Route path="/contactdetail/:id/:name/:email/:phone/:gender" element={
+          <div className='m-5 p-5 d-flex justify-content-center'>
+          <Row className="p-5 d-flex justify-content-center" style= {{width:'700px'}}>
+            <Col xs lg="10">
+              <ContactDetails />        
+            </Col>       
+          </Row>
+        </div>
+        } />
+        {/* <Route path="*" element={<Navigate replace to="/404" />} /> */}
+      </Routes>
+    </BrowserRouter>
     </div>
   );
 }
