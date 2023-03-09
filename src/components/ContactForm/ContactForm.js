@@ -1,18 +1,37 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Input } from 'reactstrap';
-import { useSelector,  useDispatch } from "react-redux";
+import { useSelector,  useDispatch} from "react-redux";
+import { useEffect } from "react";
 import { FormGroup } from 'reactstrap';
 
 export function ContactForm() {
 
-   const { fullname, email, phone, gender, cid} = useSelector((state) => ({
+   const { fullname, email, phone, gender, cid, editu, user, editFlag} = useSelector((state) => ({
     fullname: state.contactFormReducer.fullname,
     email: state.contactFormReducer.email,
     phone: state.contactFormReducer.phone,
     gender: state.contactFormReducer.gender,
-    cid: state.contactFormReducer.cid
+    cid: state.contactFormReducer.cid,
+    editu: state.contactFormReducer.editu,
+    user: state.appReducer.user,
+    editFlag: state.contactFormReducer.editFlag
   }));
+
+  useEffect(() => {
+    if(editFlag === "true"){
+      console.log("edited", editu.gender);
+      //dispatch({type: "SET_ID"})
+      dispatch({
+        type: "EDIT-DATA", 
+        payload: {
+          fullname: editu.firstName + " "+ editu.lastName,
+          email : editu.email,
+          phone : editu.phone,
+          gender : editu.gender},
+       })
+      }
+  }, [editu]);
 
   const dispatch = useDispatch();
   const handleTextChange = (e) => {
@@ -30,23 +49,23 @@ export function ContactForm() {
      })
   };
   const handleEdit = (e) => {
-
+    console.log("edit id ", editu);
+    
   }
 
   const handleSubmit = (event) => {
       event.preventDefault()
       const cname = fullname.split(' ');
-      dispatch({type: "SET_ID"})
-      dispatch({
-        type: "SUBMIT", 
-        payload: {id: cid,
+      dispatch({type: "SET_ID"});
+      dispatch({ type: "ADD", 
+        payload: [...user,{id: cid,
         firstName: cname[0],
         lastName: cname[1],
         email : email,
         phone : phone,
         gender : gender},
-       })
-      //  dispatch({type: "CLEAR"})
+       ]});
+       dispatch({type: "CLEAR"});
   };
 
   return (
@@ -87,7 +106,7 @@ export function ContactForm() {
      <Button onClick={handleSubmit} style={{ backgroundColor: "#084298" }} size="lg" block="true">
         Add Contact
       </Button>
-      <Button className= "mx-2" onClick={handleEdit} style={{ backgroundColor: "#084298" }} size="lg" block="true" disabled>
+      <Button className= "mx-2" onClick={handleEdit} style={{ backgroundColor: "#084298" }} size="lg" block="true">
         Edit Contact
       </Button>
     </Form>

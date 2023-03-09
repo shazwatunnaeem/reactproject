@@ -11,8 +11,6 @@ import person1 from './person1.png';
 import { useDispatch } from "react-redux";
 import {useNavigate} from 'react-router-dom';
 
-
-
 export function ContactCard(props) {
 
     // console.log(props);
@@ -24,16 +22,17 @@ export function ContactCard(props) {
         navigate("/contactdetail/" + form.id + "/" + form.firstName+ " " + form.lastName + "/" + form.email + "/" + form.phone + "/" + form.gender);
       };
 
-    const deleteContact = (event) => {
+    const deleteContact = () => {
         console.log("delete");
         console.log(form.id);
         dispatch({ type: "DELETE-ID", payload: form.id})
     };
 
-    const editContact = (event) => {
+    const editContact = () => {
         console.log("edit");
         console.log(form.id);
-        dispatch({ type: "EDIT", payload: form.id})
+        dispatch({ type: "EDIT", payload: form});
+        dispatch({ type: "EDIT-FLAG", payload: "true"});
     };
    
     return (

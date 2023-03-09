@@ -42,13 +42,13 @@ function App() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (form != null) {
-      dispatch({ type: "ADD", payload: [form, ...user]});
-      console.log([form, ...user]);
-    }
+  // useEffect(() => {
+  //   if (form != null) {
+  //     dispatch({ type: "ADD", payload: [form, ...user]});
+  //     console.log([form, ...user]);
+  //   }
     
-  }, [form]);
+  // }, [form]);
 
   useEffect(() => {
     if(deleteId !=null){
