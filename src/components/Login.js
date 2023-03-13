@@ -1,12 +1,5 @@
-import {
-  Button,
-  Form,
-  FormGroup,
-  Input,
-  Label
-} from 'reactstrap';
+import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import {useNavigate} from 'react-router-dom';
-
 
 export function Login() {
     const navigate = useNavigate();
@@ -26,8 +19,7 @@ export function Login() {
               id="exampleEmail"
               placeholder="example@example.com"
             />
-          </FormGroup>
-          
+          </FormGroup>        
           <FormGroup>
             <Label for="examplePassword">Password</Label>
             <Input

@@ -1,7 +1,4 @@
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, Button
-} from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle, Button } from 'reactstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import phone from './phone.png';
@@ -12,12 +9,10 @@ import { useDispatch } from "react-redux";
 import {useNavigate} from 'react-router-dom';
 
 export function ContactCard(props) {
-
-    // console.log(props);
     const { form } = props;
     const dispatch = useDispatch();
-
     const navigate = useNavigate();
+    
     const navigateToDetails = () => {
         navigate("/contactdetail/" + form.id + "/" + form.firstName+ " " + form.lastName + "/" + form.email + "/" + form.phone + "/" + form.gender);
       };
@@ -31,13 +26,13 @@ export function ContactCard(props) {
     const editContact = () => {
         console.log("edit");
         console.log(form.id);
+        dispatch({ type: "EDIT-FLAG", payload: true});
         dispatch({ type: "EDIT", payload: form});
-        dispatch({ type: "EDIT-FLAG", payload: "true"});
     };
    
     return (
         <div>
-            <Card id= {props.id} className="mx-5 my-3">
+            <Card id= {props.id} className="crd mx-2 my-2">
                 <CardBody className="m-2">
                     <Row>
                         <Col style={{ textAlign: "left" }}> 

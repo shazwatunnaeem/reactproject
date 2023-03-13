@@ -10,19 +10,16 @@ import { useEffect } from "react";
 import { useSelector,  useDispatch } from "react-redux";
 import { Login } from './components/Login';
 import { ContactDetails } from './components/ContactDetails';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
-
+import { BrowserRouter, Routes, Route} from "react-router-dom";
+import { CardGroup } from 'react-bootstrap';
+import { QueryComponent } from './components/reactquery';
 
 function App() {
-  const { deleteId, form, user } = useSelector((state) => ({
+  const { deleteId, user } = useSelector((state) => ({
     deleteId: state.appReducer.deleteId,
-    form: state.contactFormReducer.form,
     user: state.appReducer.user
   }));
+
   const dispatch = useDispatch();
 
   useEffect( () => {
@@ -42,14 +39,6 @@ function App() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   if (form != null) {
-  //     dispatch({ type: "ADD", payload: [form, ...user]});
-  //     console.log([form, ...user]);
-  //   }
-    
-  // }, [form]);
-
   useEffect(() => {
     if(deleteId !=null){
       dispatch({ type: "DELETE", payload: deleteId});
@@ -60,47 +49,48 @@ function App() {
   }, [deleteId]);
 
   return (
-   
-      <div className="App">
- 
-
-      <BrowserRouter>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={
-            <div className='m-5 p-5 d-flex justify-content-center'>
-            <Row className="p-5 border d-flex justify-content-center" style= {{width:'700px'}}>
-              <Col xs lg="7">
-                <Login />        
-              </Col>       
-            </Row>
-          </div>
-          } />
-          <Route path="/contactform" element={
-              <Row className="justify-content-md-center">
-                <Col xs lg="4"> <ContactForm /> </Col>
-                <Col xs lg="4" className="m-5">
-                  <Form.Group className="my-3 mx-5">
-                    <Form.Control type="text" placeholder="Filter Contacts..." />
-                  </Form.Group>
-                  {user?.map((key, index) => (
-                    <ContactCard key={index} id = {index} form={key} />
-                  ))}
-                </Col>
-              </Row>
-          } />
-          <Route path="/contactdetail/:id/:name/:email/:phone/:gender" element={
-            <div className='m-5 p-5 d-flex justify-content-center'>
-            <Row className="p-5 d-flex justify-content-center" style= {{width:'700px'}}>
-              <Col xs lg="10">
-                <ContactDetails />        
-              </Col>       
-            </Row>
-          </div>
-          } />
-          {/* <Route path="*" element={<Navigate replace to="/404" />} /> */}
-        </Routes>
-    </BrowserRouter>
+   <div className="App">
+        <BrowserRouter>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={
+              <div className='m-5 p-5 d-flex justify-content-center'>
+                <Row className="p-5 border d-flex justify-content-center" style= {{width:'700px'}}>
+                  <Col xs lg="7">
+                    <Login />        
+                  </Col>       
+                </Row>
+              </div>
+            } />
+            <Route path="/contactform" element={
+                <Row className="justify-content-md-center">
+                  <Col xs lg="4"> <ContactForm /> </Col>
+                  <Col xs lg="7" className="m-5">
+                    <Form.Group className="mx-2 my-2">
+                      <Form.Control type="text" placeholder="Filter Contacts..." />
+                    </Form.Group>
+                    <CardGroup>
+                      {user?.map((key, index) => (
+                        <ContactCard key={index} id = {index} form={key} />
+                      ))}
+                    </CardGroup>
+                  </Col>
+                </Row>
+            } />
+            <Route path="/contactdetail/:id/:name/:email/:phone/:gender" element={
+              <div className='m-5 p-5 d-flex justify-content-center'>
+                <Row className="p-5 d-flex justify-content-center" style= {{width:'700px'}}>
+                  <Col xs lg="10">
+                    <ContactDetails />        
+                  </Col>       
+                </Row>
+              </div>
+            } />
+            <Route path="/abc" element={
+                    <QueryComponent />                       
+            } />
+          </Routes>
+      </BrowserRouter>
     </div>
   );
 }

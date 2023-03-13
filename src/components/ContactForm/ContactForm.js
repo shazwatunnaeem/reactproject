@@ -19,9 +19,8 @@ export function ContactForm() {
   }));
 
   useEffect(() => {
-    if(editFlag === "true"){
+    if(editFlag === true){
       console.log("edited", editu.gender);
-      //dispatch({type: "SET_ID"})
       dispatch({
         type: "EDIT-DATA", 
         payload: {
@@ -48,14 +47,23 @@ export function ContactForm() {
       payload: e.target.value,
      })
   };
+  
   const handleEdit = (e) => {
     console.log("edit id ", editu);
-    
+    dispatch({ type: "EDIT-FLAG", payload: false});
+    const cname = fullname.split(/ (.*)/);
+    dispatch({type: "EDITED", payload: {id: editu.id,
+      firstName: cname[0],
+      lastName: cname[1],
+      email : email,
+      phone : phone,
+      gender : gender}});  
+      dispatch({type: "CLEAR"});
   }
 
   const handleSubmit = (event) => {
       event.preventDefault()
-      const cname = fullname.split(' ');
+      const cname = fullname.split(/ (.*)/);
       dispatch({type: "SET_ID"});
       dispatch({ type: "ADD", 
         payload: [...user,{id: cid,
@@ -82,31 +90,31 @@ export function ContactForm() {
       </Form.Group>
       <FormGroup className="my-3 mx-5" style={{textAlign: "left"}}>
         <h5> Gender:</h5>
-          <Form.Label className= "m-3" check="true">
+          <Form.Label className= "m-3">
             <Input
               name="male"
               type="radio" 
-              value = "Male"
-              checked={gender === "Male"}
+              value = "male"
+              checked={gender === "male"}
               onChange={onOptionChange}
             />
             Male
           </Form.Label>
-          <Form.Label check="true">
+          <Form.Label>
             <Input
               name="female"
               type="radio"
-              value="Female"
+              value="female"
               onChange={onOptionChange}
-              checked={gender === "Female"}
+              checked={gender === "female"}
             />
             Female
           </Form.Label>
       </FormGroup>
-     <Button onClick={handleSubmit} style={{ backgroundColor: "#084298" }} size="lg" block="true">
+     <Button onClick={handleSubmit} style={{ backgroundColor: "#084298" }} size="lg" block="true" disabled={editFlag}>
         Add Contact
       </Button>
-      <Button className= "mx-2" onClick={handleEdit} style={{ backgroundColor: "#084298" }} size="lg" block="true">
+      <Button className= "mx-2" onClick={handleEdit} style={{ backgroundColor: "#084298" }} size="lg" block="true" disabled={!editFlag}>
         Edit Contact
       </Button>
     </Form>

@@ -1,36 +1,30 @@
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, Button
-} from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle, Button } from 'reactstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import cphone from './ContactCard/phone.png';
 import cemail from './ContactCard/email.png';
 import './ContactCard/ContactCard.css';
 import person1 from './ContactCard/person1.png';
-import {
-    useParams,
-  } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export function ContactDetails() {
 
-    const { id, name, email, phone, gender } = useParams();
-  return (
-    <div>
-      <Card>
+    const { name, email, phone, gender } = useParams();
+    return (
+        <div>
+            <Card>
                 <CardBody>
                     <Row>
                         <Col style={{ textAlign: "left" }}> <CardTitle tag="h4" style={{ color: "#0c5d97" }}> {name} </CardTitle>
                             <CardText>
                             <CardImg className="crdimg"
                                 src={cemail} alt="" />
-                                 {email}
+                                {email}
                             </CardText>
                             <CardText>
                                 <CardImg className="crdimg" src={cphone} alt="" />
-                                 {phone}
+                                {phone}
                             </CardText>
-
                             <Button style={{ backgroundColor: "black" }} className="mb-3" disabled> {gender} </Button>
                         </Col>
                         <Col style={{textAlign: "right"}}>
@@ -39,7 +33,7 @@ export function ContactDetails() {
                     </Row>
                 </CardBody>
             </Card>
-    </div>
+        </div>
   );
 }
   
