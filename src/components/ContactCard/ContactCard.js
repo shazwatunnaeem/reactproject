@@ -21,6 +21,11 @@ export function ContactCard(props) {
         console.log("delete");
         console.log(form.id);
         dispatch({ type: "DELETE-ID", payload: form.id})
+        fetch('http://localhost:5000/users/'+form.id, {
+        method: 'DELETE',
+        })
+        .then(res => res.json())
+        .then(console.log);
     };
 
     const editContact = () => {

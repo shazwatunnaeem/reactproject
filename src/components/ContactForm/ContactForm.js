@@ -49,7 +49,7 @@ export function ContactForm() {
   };
   
   const handleEdit = (e) => {
-    console.log("edit id ", editu);
+    //console.log("edit id ", editu);
     dispatch({ type: "EDIT-FLAG", payload: false});
     const cname = fullname.split(/ (.*)/);
     dispatch({type: "EDITED", payload: {id: editu.id,
@@ -57,7 +57,32 @@ export function ContactForm() {
       lastName: cname[1],
       email : email,
       phone : phone,
-      gender : gender}});  
+      gender : gender}});
+
+      console.log("edit ", JSON.stringify({
+        id: editu.id,
+        firstName: cname[0],
+        lastName: cname[1],
+        email : email,
+        phone : phone,
+        gender : gender
+        }));
+      
+      fetch(`http://localhost:5000/users/${editu.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        id: editu.id,
+        firstName: cname[0],
+        lastName: cname[1],
+        email : email,
+        phone : phone,
+        gender : gender
+        })
+      })
+        .then(res => res.json())
+        .then("edit api",console.log)
+        .catch(err => console.log(err)); 
+            
       dispatch({type: "CLEAR"});
   }
 
@@ -73,6 +98,21 @@ export function ContactForm() {
         phone : phone,
         gender : gender},
        ]});
+
+       fetch('http://localhost:5000/users/add', {
+        method: 'POST',
+        body: JSON.stringify({
+          id: cid,
+          firstName: cname[0],
+          lastName: cname[1],
+          email : email,
+          phone : phone,
+          gender : gender
+        })
+      })
+      .then(res => res.json())
+      .then(console.log)
+      .catch(err => console.log(err));  
        dispatch({type: "CLEAR"});
   };
 

@@ -13,6 +13,7 @@ import { ContactDetails } from './components/ContactDetails';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 import { CardGroup } from 'react-bootstrap';
 import { QueryComponent } from './components/reactquery';
+import { useQuery } from '@tanstack/react-query';
 
 function App() {
   const { deleteId, user } = useSelector((state) => ({
@@ -22,15 +23,25 @@ function App() {
 
   const dispatch = useDispatch();
 
+  // const getFacts = async () => {
+  //   const res = await fetch('https://dummyjson.com/users?limit=10&select=id,firstName,lastName,email,gender,phone');
+  //   const udata = res.json();
+  //   return udata;
+  // };
+  // const {data, error, isLoading} = useQuery({ queryKey: ['users'], queryFn: getFacts });
+  // if (error) return <div>Request Failed</div>;
+  // if (isLoading) return <div>Loading...</div>;
+
   useEffect( () => {
+           
     console.log("executed only once!");
     async function fetchData() {
-      fetch("https://dummyjson.com/users?limit=10&select=id,firstName,lastName,email,gender,phone")
+      fetch("http://localhost:5000/users")
         .then((response) => response.json())
         .then((data) => {
           
-          console.log(data["users"]);
-          dispatch({ type: "API-CALL", payload: data["users"]})
+          console.log(data);
+          dispatch({ type: "API-CALL", payload: data})
         })
         .catch((error) => {
           console.log(error)
