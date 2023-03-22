@@ -70,6 +70,9 @@ export function ContactForm() {
       
       fetch(`http://localhost:5000/users/${editu.id}`, {
       method: 'PUT',
+      headers: {
+        "Content-Type": "application/json" 
+      },
       body: JSON.stringify({
         id: editu.id,
         firstName: cname[0],
@@ -101,6 +104,9 @@ export function ContactForm() {
 
        fetch('http://localhost:5000/users/add', {
         method: 'POST',
+        headers: {
+          "Content-Type": "application/json" 
+        },
         body: JSON.stringify({
           id: cid,
           firstName: cname[0],

@@ -14,6 +14,7 @@ import { BrowserRouter, Routes, Route} from "react-router-dom";
 import { CardGroup } from 'react-bootstrap';
 import { QueryComponent } from './components/reactquery';
 import { useQuery } from '@tanstack/react-query';
+import { SignUp } from './components/SignUp';
 
 function App() {
   const { deleteId, user } = useSelector((state) => ({
@@ -69,6 +70,15 @@ function App() {
                 <Row className="p-5 border d-flex justify-content-center" style= {{width:'700px'}}>
                   <Col xs lg="7">
                     <Login />        
+                  </Col>       
+                </Row>
+              </div>
+            } />
+            <Route path="/signup" element={
+              <div className='m-5 p-5 d-flex justify-content-center'>
+                <Row className="p-5 border d-flex justify-content-center" style= {{width:'700px'}}>
+                  <Col xs lg="7">
+                    <SignUp />        
                   </Col>       
                 </Row>
               </div>
