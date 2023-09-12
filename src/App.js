@@ -35,13 +35,13 @@ function App() {
   // if (isLoading) return <div>Loading...</div>;
 
   useEffect(() => {
-    if (logIn) {
+    //if (logIn) {
       console.log("executed only once!");
       async function fetchData() {
         fetch("http://localhost:5000/users",
-          {
-            credentials: "include",
-          }
+          // {
+          //   credentials: "include",
+          // }
           )
           .then((response) => response.json())
           .then((data) => {
@@ -54,8 +54,8 @@ function App() {
           });
       }
       fetchData();
-    }
-  }, [logIn]);
+    //}
+  }, []);
 
   useEffect(() => {
     if (deleteId != null) {
@@ -91,8 +91,8 @@ function App() {
           } />
           <Route path="/contactform" element={
             <Row className="justify-content-md-center">
-              <Col xs lg="4"> <ContactForm /> </Col>
-              <Col xs lg="7" className="m-5">
+              <Col xs lg="5"> <ContactForm /> </Col>
+              <Col xs lg="5" className="m-5">
                 <Form.Group className="mx-2 my-2">
                   <Form.Control type="text" placeholder="Filter Contacts..." />
                 </Form.Group>
