@@ -1,3 +1,5 @@
+//This file contains information on NavBar of Contacts App
+
 import { Navbar, NavbarBrand, NavbarText } from 'reactstrap';
 import logout from './logout.svg'
 import logo from './logo.svg'
