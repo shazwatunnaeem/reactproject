@@ -1,3 +1,4 @@
+//This file includes contact details
 import { Card, CardImg, CardText, CardBody, CardTitle, Button } from 'reactstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
